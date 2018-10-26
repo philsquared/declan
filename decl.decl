@@ -1,0 +1,109 @@
+# # for comments
+# type/ variable names in `backticks` can include otherwise illegal characters
+# variables are in the mathematical sense, ie immutable
+
+# enums
+# (can possibly extend to full sum types, with associated values)
+type EnumSingle = e1 | e2 | e3  # single line
+
+type EnumMulti =  # multiple lines (consistent indentation)
+	| e1
+	| e2 of <record> # field names optional
+	| e3
+
+type EnumMulti2 =  # multiple lines, with multi-line records
+	| e1
+	| e2 of
+		f1 : String # must be indented
+		f2 : int
+	| e3
+
+
+# record/ product type
+type Record =
+	f1: String key # designates a key field
+	f2: String ref # designates a ref field - ie refers to a key in another type
+	f3: Int
+	f4: Float? # an optional type
+
+type Record2 = f1: String [attributes], f2: Int [attributes]
+
+
+# variable (single line)
+v1 = "a string value" # inferred type
+v2 : String = "another string value" # explicit type
+
+# variable (multiple lines)
+v3 = # inferred type
+	42
+v4 : Float = # explicit type
+	3.141
+
+# array (single line)
+a1 = [1; 2; 3] # inferred types
+a2 : [String] = ["1"; "two"; "3"] # explicit types
+
+# array (multi line)
+a3 = # inferred types
+	1
+	--- # any number of dashes as separators
+	1
+	---
+	2
+
+a4 : [Float] = # explicit types
+	1.23
+	---
+	3.45
+	---
+	4.67
+
+# objects
+o1 : Record2 = { f1 = "a string"; f2 = 42 } # single line
+
+o2 : Record2 = # multiline
+	f1 = "a string"
+	f2 = 7
+
+# arrays of objects
+ao : [Record2] =
+	f1 = "one"
+	f2 = 1
+	---
+	f1 = "two"
+	f2 = 2
+	---
+	f1 = "three"
+	f2 = 3
+
+# built in types:
+"string"
+'string'
+
+"""
+multiline string
+  leading whitespace is significant from indent if \"""
+triple quotes can be escaped with a backslash, as above
+backslashes can be escaped with double backslash, 
+  e.g. \\\\ evaluates to two backslahes
+"""
+
+	'''
+	another
+	multiline string
+	no indentation here
+	'''
+
+true | false # Bool
+42 # Int
+3.141 # Float
+2018/05/15 # Date
+2018/05/15 19:16:00Z # DateTime
+https://cpponsea.uk # URL/ Filename
+
+# strong type aliases can be created with:
+type <name> = <aliased type>
+
+# The alias behaves the same as the underlying type, but the processor receives the alias type name, so may treat it differently.
+
+# escaping rules TBD
