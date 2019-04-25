@@ -8,14 +8,19 @@ type EnumSingle = e1 | e2 | e3  # single line
 
 type EnumMulti =  # multiple lines (consistent indentation)
 	| e1
-	| e2 of <record> # field names optional
+	| e2 : String # associated data
 	| e3
 
 type EnumMulti2 =  # multiple lines, with multi-line records
 	| e1
-	| e2 of
-		f1 : String # must be indented
-		f2 : int
+	| e2 : { f1 : String; f2 : Int } # associated record
+	| e3
+
+type EnumMulti2 =  # multiple lines, with multi-line records
+	| e1
+	| e2 : # associated, multiline, record
+		f1 : String
+		f2 : Int 
 	| e3
 
 
@@ -26,50 +31,55 @@ type Record =
 	f3: Int
 	f4: Float? # an optional type
 
-type Record2 = f1: String [attributes], f2: Int [attributes]
+type Record2 = f1: String [attributes]; f2: Int [attributes]
 
+# (attributes will be described later)
 
 # variable (single line)
-v1 = "a string value" # inferred type
-v2 : String = "another string value" # explicit type
+let v1 = "a string value" # inferred type
+let v2 : String = "another string value" # explicit type
 
 # variable (multiple lines)
-v3 = # inferred type
+let v3 = # inferred type
 	42
-v4 : Float = # explicit type
+let v4 : Float = # explicit type
 	3.141
 
 # array (single line)
-a1 = [1; 2; 3] # inferred types
-a2 : [String] = ["1"; "two"; "3"] # explicit types
+let a1 = [1, 2, 3] # inferred types
+let a2 : [String] = ["1", "two", "3"] # explicit types
 
 # array (multi line)
-a3 = # inferred types
+let a3 = # inferred types
 	1
-	--- # any number of dashes as separators
 	1
-	---
 	2
 
-a4 : [Float] = # explicit types
+let a4 : [Float] = # explicit types
 	1.23
-	---
+	3.45
+	4.67
+
+let a5 = # can optionally use dashes as separators
+	1.23
+	--- # any number of dashes as separators
 	3.45
 	---
 	4.67
 
-# objects
-o1 : Record2 = { f1 = "a string"; f2 = 42 } # single line
 
-o2 : Record2 = # multiline
+# objects
+let o1 : Record2 = ( f1 = "a string", f2 = 42 ) # single line
+
+let o2 : Record2 = # multiline
 	f1 = "a string"
 	f2 = 7
 
 # arrays of objects
-ao : [Record2] =
+let ao : [Record2] =
 	f1 = "one"
 	f2 = 1
-	---
+	--- # any number of dashes as separators (not optional for objects)
 	f1 = "two"
 	f2 = 2
 	---
@@ -101,9 +111,26 @@ true | false # Bool
 2018/05/15 19:16:00Z # DateTime
 https://cpponsea.uk # URL/ Filename
 
+# types can be annotated
+42 : Int
+
+# or used directly:
+Int( 42 )
+
 # strong type aliases can be created with:
 type <name> = <aliased type>
 
-# The alias behaves the same as the underlying type, but the processor receives the alias type name, so may treat it differently.
+# The alias behaves the same as the underlying type, but the processor receives the alias type name, 
+# so may treat it differently.
 
-# escaping rules TBD
+# Attributes can be associated with any declaration or definition
+# They can be values of any type (here a string is inferred) - including objects
+s1 = "Just a string" ["Not just any string"]
+
+type Description = String
+
+type AnotherType =
+	m1 : String [Record2( f1="string data", f2=7)]
+	m2 : Int 	[Description( "This is an int")]
+
+# escaping rules, import TBD

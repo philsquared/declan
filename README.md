@@ -33,7 +33,7 @@ optionalString : String? = none
 
 Note that the last type could not be inferred because it represents an optional type and is initialised from the empty value - so the Stringness is missing. Placing the type after the name (and a :) is usually referred to as type annotation, and is common in a number of languages, particularly functional programming languages, or those inspired by them.
 
-Like JSON, Declan also has record types ("Product Types"):
+Like JSON, Declan also has record types ("Product Types") - but they are statically typed:
 
 ```
 type MyRecord =
@@ -52,9 +52,11 @@ But each choice can also act like an object - with data of their own:
 
 ```
 type directoryEntry =
-    File of name : String
-    Directory of name : String
+    | File of name : String
+    | Directory of name : String
 ```
+
+Note that the first `|` there is optional - but is usually there for aesthetic purposes
 
 _to be continued..._
 (in the meantime see [this file](decl.decl) for more examples)
