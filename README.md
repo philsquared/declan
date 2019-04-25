@@ -52,8 +52,8 @@ But each choice can also act like an object - with data of their own:
 
 ```
 type directoryEntry =
-    | File of name : String
-    | Directory of name : String
+    | File : String
+    | Directory : String
 ```
 
 Note that the first `|` there is optional - but is usually there for aesthetic purposes
