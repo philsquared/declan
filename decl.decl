@@ -26,8 +26,8 @@ type EnumMulti2 =  # multiple lines, with multi-line records
 
 # record/ product type
 type Record =
-	f1: String key # designates a key field
-	f2: String ref # designates a ref field - ie refers to a key in another type
+	f1: String @key # designates a key field
+	f2: String @ref # designates a ref field - ie refers to a key in another type
 	f3: Int
 	f4: Float? # an optional type
 
