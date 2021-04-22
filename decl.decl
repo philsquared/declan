@@ -134,6 +134,6 @@ let s1 @"Not just any string" = "Just a string"
 
 type AnotherType =
 	m1 : String @Record2( f1="string data", f2=7) # Multiple args must be named
-	m2 : Int 	@Description("This is an int") # Single args, names may be ommitted
+	m2 : Int    @Description("This is an int") # Single args, names may be ommitted
 
 # escaping rules, import TBD
