@@ -26,12 +26,12 @@ type EnumMulti2 =  # multiple lines, with multi-line records
 
 # record/ product type
 type Record =
-	f1: String @key # designates a key field
-	f2: String @ref # designates a ref field - ie refers to a key in another type
+	f1 : String @key # designates a key field
+	f2 : String @ref # designates a ref field - ie refers to a key in another type
 	f3: Int
 	f4: Float? # an optional type
 
-type Record2 = f1: String @attribute; f2: Int @attribute1 @attribute2
+type Record2 = f1 @attribute : String; f2 @attribute1 @attribute2 : Int
 
 # (attributes will be described later)
 
@@ -131,9 +131,13 @@ type Description : String
 # They can be values of any type (here a string is inferred) - including objects
 let s1 @"Not just any string" = "Just a string"
 
+# in variable or field declarations, attributes may appear before or after (or both) the
+# type annotation, if present
 
 type AnotherType =
 	m1 : String @Record2( f1="string data", f2=7) # Multiple args must be named
 	m2 : Int    @Description("This is an int") # Single args, names may be ommitted
+	m3 @Before : String
+	m4 @Before : String @After
 
 # escaping rules, import TBD
