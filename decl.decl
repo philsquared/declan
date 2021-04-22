@@ -31,7 +31,7 @@ type Record =
 	f3: Int
 	f4: Float? # an optional type
 
-type Record2 = f1: String [attributes]; f2: Int [attributes]
+type Record2 = f1: String @attribute; f2: Int @attribute1 @attribute2
 
 # (attributes will be described later)
 
@@ -108,7 +108,7 @@ true | false # Bool
 42 # Int
 3.141 # Float
 2018/05/15 # Date
-2018/05/15 19:16:00Z # DateTime
+2018/05/15T19:16:00Z # DateTime (https://www.w3.org/TR/NOTE-datetime)
 https://cpponsea.uk # URL/ Filename
 
 # types can be annotated
@@ -118,19 +118,22 @@ https://cpponsea.uk # URL/ Filename
 Int( 42 )
 
 # strong type aliases can be created with:
-type <name> = <aliased type>
+type <name> : <aliased type>
+
+# e.g.
+type Description : String
 
 # The alias behaves the same as the underlying type, but the processor receives the alias type name, 
-# so may treat it differently.
+# so may treat it differently - more like a "derived" type
 
-# Attributes can be associated with any declaration or definition
+# Attributes are introduced with the @ prefix, and may be associated with any declaration or definition
+# They trail the entity (type or variable) they apply to
 # They can be values of any type (here a string is inferred) - including objects
-s1 = "Just a string" ["Not just any string"]
+let s1 @"Not just any string" = "Just a string"
 
-type Description = String
 
 type AnotherType =
-	m1 : String [Record2( f1="string data", f2=7)]
-	m2 : Int 	[Description( "This is an int")]
+	m1 : String @Record2( f1="string data", f2=7) # Multiple args must be named
+	m2 : Int 	@Description("This is an int") # Single args, names may be ommitted
 
 # escaping rules, import TBD
